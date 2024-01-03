@@ -1,7 +1,5 @@
-import java.util.*;
-
 class Solution {
-    private boolean[][] graph, isVisited;
+    private boolean[][] graph;
     
     public int solution(int n, int[][] results) {
         graph = new boolean[n][n];
