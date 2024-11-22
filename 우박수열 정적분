@@ -1,0 +1,81 @@
+import java.util.List;
+import java.util.ArrayList;
+
+class Solution {
+    public double[] solution(int k, int[][] ranges) {
+        
+        int len1 = ranges.length;
+        double[] answer = new double[len1];
+        double[] intes = integration(collatz(k));
+        int len2 = intes.length;
+        
+        for(int i = 0; i < len1; i++) {
+            //answer[i] = intes[ranges[i][0]][intes.length - 1 + ranges[i][1]];
+            int[] range = ranges[i];
+            int x1 = range[0], x2 = len2 + range[1];
+            
+            if(x1 > x2) answer[i] = -1;
+            else if(x1 == x2) answer[i] = 0;
+            else {
+                for(int j = x1; j < x2; j++) {
+                    answer[i] += intes[j];
+                }
+            }
+        }
+        
+        return answer;
+    }
+    
+    public List<Integer> collatz(int y) {
+        List<Integer> result = new ArrayList<>();
+        result.add(y);
+        
+        while(y != 1) {
+            if(y % 2 == 0) {
+                y /= 2;
+            } else {
+                y = y * 3 + 1;
+            }
+            result.add(y);
+        }
+        
+        return result;
+    }
+    
+    public double[] integration(List<Integer> list) {
+        int len = list.size() - 1;
+        double[] inte = new double[len];
+        
+        for(int i = 0; i < len; i++) {
+            double y1 = (double)list.get(i);
+            double y2 = (double)list.get(i + 1);
+            inte[i] = (y1 + y2) / 2;
+        }
+        
+        return inte;
+    }
+    
+    /*
+    알 수 없는 런타임 에러로 테스트 통과 실패한 부분
+    ArrayIndexOutOfBoundsException 문제로 추정되나 확실하지 않음
+    
+    public double[][] DP(double[] inte) {
+        int len = inte.length;
+        double[][] intes = new double[len][len];
+        
+        for(int i = 0; i < len; i++) { // 시작점
+            double sum = 0;
+            for(int j = 0; j < len; j++) { // 끝점
+                if(i > j) intes[i][j] = -1;
+                else if(i == j) intes[i][j] = 0;
+                else {
+                    sum += inte[j];
+                    intes[i][j] = sum;
+                }
+            }
+        } 
+        
+        return intes;
+    }
+    */
+}
