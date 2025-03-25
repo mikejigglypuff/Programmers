@@ -6,6 +6,7 @@ class Solution {
     public boolean solution(String[] phone_book) {
         Arrays.sort(phone_book);
         
+        // sort를 활용하면 hash 자료구조를 사용하지 않아도 됨
         Set<String> phonePrefixes = new HashSet<>();
         
         for(String s : phone_book) {
